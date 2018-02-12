@@ -3,7 +3,7 @@
 namespace DotNetCoreAsysnSample.Models
 {
     /// <summary>
-    /// Customer model
+    ///     Customer model
     /// </summary>
     public class Customer
     {

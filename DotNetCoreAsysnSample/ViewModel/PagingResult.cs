@@ -3,7 +3,7 @@
 namespace DotNetCoreAsysnSample.ViewModel
 {
     /// <summary>
-    /// Page result view model
+    ///     Page result view model
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public struct PagingResult<T>

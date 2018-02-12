@@ -1,7 +1,7 @@
 ﻿namespace DotNetCoreAsysnSample.Models
 {
     /// <summary>
-    /// Order model
+    ///     Order model
     /// </summary>
     public class Order
     {

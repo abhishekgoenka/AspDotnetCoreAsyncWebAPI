@@ -1,12 +1,12 @@
-﻿using DotNetCoreAsysnSample.Models;
-using DotNetCoreAsysnSample.ViewModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DotNetCoreAsysnSample.Models;
+using DotNetCoreAsysnSample.ViewModel;
 
 namespace DotNetCoreAsysnSample.Repository
 {
     /// <summary>
-    /// Customer's async repo contract
+    ///     Customer's async repo contract
     /// </summary>
     public interface ICustomersRepositoryAsync
     {

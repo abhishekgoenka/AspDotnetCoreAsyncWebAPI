@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using DotNetCoreAsysnSample.Repository;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetCoreAsysnSample.Controllers
 {
@@ -11,8 +11,8 @@ namespace DotNetCoreAsysnSample.Controllers
     [EnableCors("AllowAnyOrigin")]
     public class CustomersApiControllerAsync : Controller
     {
-        ICustomersRepositoryAsync _CustomersRepository;
-        ILogger _Logger;
+        private readonly ICustomersRepositoryAsync _CustomersRepository;
+        private readonly ILogger _Logger;
 
         public CustomersApiControllerAsync(ICustomersRepositoryAsync customersRepo, ILoggerFactory loggerFactory)
         {
@@ -21,8 +21,8 @@ namespace DotNetCoreAsysnSample.Controllers
         }
 
         /// <summary>
-        /// Get all customers
-        /// Route : GET : api/customers
+        ///     Get all customers
+        ///     Route : GET : api/customers
         /// </summary>
         /// <returns>Customers</returns>
         [HttpGet]
@@ -36,13 +36,13 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new { Status = false });
+                return BadRequest(new {Status = false});
             }
         }
 
         /// <summary>
-        /// Get customers by page
-        /// Route : GET : api/customers/page/1/10
+        ///     Get customers by page
+        ///     Route : GET : api/customers/page/1/10
         /// </summary>
         /// <param name="skip">Pages to skip</param>
         /// <param name="take">Number of records to return</param>
@@ -59,13 +59,13 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new { Status = false });
+                return BadRequest(new {Status = false});
             }
         }
 
         /// <summary>
-        /// Get customer by id
-        /// Route : GET : api/customers/1
+        ///     Get customer by id
+        ///     Route : GET : api/customers/1
         /// </summary>
         /// <param name="id">Customer ID</param>
         /// <returns>Customer</returns>
@@ -80,7 +80,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new { Status = false });
+                return BadRequest(new {Status = false});
             }
         }
     }

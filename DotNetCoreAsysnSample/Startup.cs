@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DotNetCoreAsysnSample.Repository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using DotNetCoreAsysnSample.Repository;
-using Microsoft.EntityFrameworkCore;
 
 namespace DotNetCoreAsysnSample
 {
@@ -39,9 +39,9 @@ namespace DotNetCoreAsysnSample
             {
                 options.AddPolicy("AllowAnyOrigin",
                     builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
                 );
             });
 
@@ -56,10 +56,7 @@ namespace DotNetCoreAsysnSample
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             //disable CORS
             app.UseCors("AllowAnyOrigin");

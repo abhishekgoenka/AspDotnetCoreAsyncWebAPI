@@ -1,19 +1,19 @@
-﻿using DotNetCoreAsysnSample.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DotNetCoreAsysnSample.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DotNetCoreAsysnSample.Repository
 {
     /// <summary>
-    /// Seed data
+    ///     Seed data
     /// </summary>
     public class CustomersDbSeeder
     {
-        readonly ILogger _Logger;
+        private readonly ILogger _Logger;
 
         public CustomersDbSeeder(ILoggerFactory loggerFactory)
         {
@@ -27,12 +27,8 @@ namespace DotNetCoreAsysnSample.Repository
             {
                 var customersDb = serviceScope.ServiceProvider.GetService<CustomersDbContext>();
                 if (await customersDb.Database.EnsureCreatedAsync())
-                {
                     if (!await customersDb.Customers.AnyAsync())
-                    {
                         await InsertCustomersSampleData(customersDb);
-                    }
-                }
             }
         }
 
@@ -43,7 +39,7 @@ namespace DotNetCoreAsysnSample.Repository
 
             try
             {
-                int numAffected = await db.SaveChangesAsync();
+                var numAffected = await db.SaveChangesAsync();
                 _Logger.LogInformation($"Saved {numAffected} customers");
             }
             catch (Exception exp)
@@ -51,13 +47,12 @@ namespace DotNetCoreAsysnSample.Repository
                 _Logger.LogError($"Error in {nameof(CustomersDbSeeder)}: " + exp.Message);
                 throw;
             }
-
         }
 
         private List<Customer> GetCustomers()
         {
             //Customers
-            var customerNames = new string[]
+            var customerNames = new[]
             {
                 "Marcus,HighTower,Male,acmecorp.com",
                 "Jesse,Smith,Female,gmail.com",
@@ -84,7 +79,7 @@ namespace DotNetCoreAsysnSample.Repository
                 "Elaine,Jones,Female,yahoo.com",
                 "John,Papa,Male,gmail.com"
             };
-            var addresses = new string[]
+            var addresses = new[]
             {
                 "1234 Anywhere St.",
                 "435 Main St.",
@@ -112,7 +107,7 @@ namespace DotNetCoreAsysnSample.Repository
                 "899 Mickey Way"
             };
 
-            var citiesStates = new string[]
+            var citiesStates = new[]
             {
                 "Phoenix,AZ,Arizona",
                 "Encinitas,CA,California",
@@ -140,28 +135,28 @@ namespace DotNetCoreAsysnSample.Repository
                 "Orlando,FL,Florida"
             };
 
-            var citiesIds = new int[] { 5, 9, 44, 5, 36, 17, 16, 9, 36, 14, 14, 6, 9, 24, 44, 36, 25, 19, 5, 14, 5, 23, 38, 17 };
+            var citiesIds = new[]
+                {5, 9, 44, 5, 36, 17, 16, 9, 36, 14, 14, 6, 9, 24, 44, 36, 25, 19, 5, 14, 5, 23, 38, 17};
             var zip = 85229;
 
             var orders = new List<Order>
             {
-                new Order { Product = "Basket", Price = 29.99M, Quantity = 1 },
-                new Order { Product = "Yarn", Price = 9.99M, Quantity = 1 },
-                new Order { Product = "Needes", Price = 5.99M, Quantity = 1 },
-                new Order { Product = "Speakers", Price = 499.99M, Quantity = 1 },
-                new Order { Product = "iPod", Price = 399.99M, Quantity = 1 },
-                new Order { Product = "Table", Price = 329.99M, Quantity = 1 },
-                new Order { Product = "Chair", Price = 129.99M, Quantity = 4 },
-                new Order { Product = "Lamp", Price = 89.99M, Quantity = 5 },
-                new Order { Product = "Call of Duty", Price = 59.99M, Quantity = 1 },
-                new Order { Product = "Controller", Price = 49.99M, Quantity = 1 },
-                new Order { Product = "Gears of War", Price = 49.99M, Quantity = 1 },
-                new Order { Product = "Lego City", Price = 49.99M, Quantity = 1 },
-                new Order { Product = "Baseball", Price = 9.99M, Quantity = 5 },
-                new Order { Product = "Bat", Price = 19.99M, Quantity = 1 }
+                new Order {Product = "Basket", Price = 29.99M, Quantity = 1},
+                new Order {Product = "Yarn", Price = 9.99M, Quantity = 1},
+                new Order {Product = "Needes", Price = 5.99M, Quantity = 1},
+                new Order {Product = "Speakers", Price = 499.99M, Quantity = 1},
+                new Order {Product = "iPod", Price = 399.99M, Quantity = 1},
+                new Order {Product = "Table", Price = 329.99M, Quantity = 1},
+                new Order {Product = "Chair", Price = 129.99M, Quantity = 4},
+                new Order {Product = "Lamp", Price = 89.99M, Quantity = 5},
+                new Order {Product = "Call of Duty", Price = 59.99M, Quantity = 1},
+                new Order {Product = "Controller", Price = 49.99M, Quantity = 1},
+                new Order {Product = "Gears of War", Price = 49.99M, Quantity = 1},
+                new Order {Product = "Lego City", Price = 49.99M, Quantity = 1},
+                new Order {Product = "Baseball", Price = 9.99M, Quantity = 5},
+                new Order {Product = "Bat", Price = 19.99M, Quantity = 1}
             };
 
-            int firstOrder, lastOrder, tempOrder = 0;
             var ordersLength = orders.Count;
             var customers = new List<Customer>();
             var random = new Random();
@@ -181,12 +176,12 @@ namespace DotNetCoreAsysnSample.Repository
                     Zip = zip + i
                 };
 
-                firstOrder = (int)Math.Floor(random.NextDouble() * orders.Count);
-                lastOrder = (int)Math.Floor(random.NextDouble() * orders.Count);
+                var firstOrder = (int) Math.Floor(random.NextDouble() * orders.Count);
+                var lastOrder = (int) Math.Floor(random.NextDouble() * orders.Count);
 
                 if (firstOrder > lastOrder)
                 {
-                    tempOrder = firstOrder;
+                    var tempOrder = firstOrder;
                     firstOrder = lastOrder;
                     lastOrder = tempOrder;
                 }
@@ -203,11 +198,11 @@ namespace DotNetCoreAsysnSample.Repository
                     };
                     customer.Orders.Add(order);
                 }
+
                 customers.Add(customer);
             }
 
             return customers;
         }
-
     }
 }
