@@ -1,0 +1,80 @@
+{
+	"info": {
+		"name": "AspDotnetCoreAsyncWebAPI",
+		"_postman_id": "9475d385-f34d-2baf-28ff-2f199fa304e3",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:55959/api/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55959",
+					"path": [
+						"api",
+						"customers"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Customers by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:55959/api/customers/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55959",
+					"path": [
+						"api",
+						"customers",
+						"5"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Customers by page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:55959/api/customers/page/2/20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55959",
+					"path": [
+						"api",
+						"customers",
+						"page",
+						"2",
+						"20"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
