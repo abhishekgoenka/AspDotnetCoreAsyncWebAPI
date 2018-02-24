@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "AspDotnetCoreAsyncWebAPI",
-		"_postman_id": "9475d385-f34d-2baf-28ff-2f199fa304e3",
+		"_postman_id": "4ea223fd-771c-c8d4-1fd2-7d3c00e45011",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13,18 +13,15 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:55959/api/customers",
-					"protocol": "http",
+					"raw": "{{server}}/api/customers",
 					"host": [
-						"localhost"
+						"{{server}}"
 					],
-					"port": "55959",
 					"path": [
 						"api",
 						"customers"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -35,19 +32,16 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:55959/api/customers/5",
-					"protocol": "http",
+					"raw": "{{server}}/api/customers/5",
 					"host": [
-						"localhost"
+						"{{server}}"
 					],
-					"port": "55959",
 					"path": [
 						"api",
 						"customers",
 						"5"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -58,12 +52,10 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:55959/api/customers/page/2/20",
-					"protocol": "http",
+					"raw": "{{server}}/api/customers/page/2/20",
 					"host": [
-						"localhost"
+						"{{server}}"
 					],
-					"port": "55959",
 					"path": [
 						"api",
 						"customers",
@@ -71,10 +63,122 @@
 						"2",
 						"20"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
+		},
+		{
+			"name": "Create Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Abhishek\",\n    \"lastName\": \"Goenka\",\n    \"email\": \"abhishek.goenka@outlook.in\",\n    \"address\": \"84533 Hardrock St.\",\n    \"city\": \"Chandler\",\n    \"stateId\": 0,\n    \"zip\": 85247,\n    \"orders\": null\n}"
+				},
+				"url": {
+					"raw": "{{server}}/api/customers",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1002,\n    \"firstName\": \"Abhishek2\",\n    \"lastName\": \"Goenka\",\n    \"email\": \"abhishek.goenka@outlook.in\",\n    \"address\": \"84533 Hardrock St.\",\n    \"city\": \"Chandler\",\n    \"stateId\": 0,\n    \"zip\": 85247,\n    \"orders\": null\n}"
+				},
+				"url": {
+					"raw": "{{server}}/api/customers/1002",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						"1002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Customer",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{server}}/api/customers/1002",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						"1002"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "575ba987-c295-4751-a0d8-9bc699127d8a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "106488c7-68e5-4dea-8a92-8de37eab31e3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "efc8771a-21d0-4349-bee7-3603db253336",
+			"key": "server",
+			"value": "http://localhost:56308",
+			"type": "text"
 		}
 	]
 }
