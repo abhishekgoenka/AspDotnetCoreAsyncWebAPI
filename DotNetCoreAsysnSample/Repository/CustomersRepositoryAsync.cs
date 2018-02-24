@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetCoreAsysnSample.Models;
 using DotNetCoreAsysnSample.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace DotNetCoreAsysnSample.Repository
 {
@@ -50,7 +50,7 @@ namespace DotNetCoreAsysnSample.Repository
             {
                 await _Context.SaveChangesAsync();
             }
-            catch (System.Exception exp)
+            catch (Exception exp)
             {
                 _Logger.LogError($"Error in {nameof(InsertCustomerAsync)}: " + exp.Message);
             }
@@ -65,12 +65,13 @@ namespace DotNetCoreAsysnSample.Repository
             _Context.Entry(customer).State = EntityState.Modified;
             try
             {
-                return (await _Context.SaveChangesAsync() > 0 ? true : false);
+                return await _Context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (Exception exp)
             {
                 _Logger.LogError($"Error in {nameof(UpdateCustomerAsync)}: " + exp.Message);
             }
+
             return false;
         }
 
@@ -80,17 +81,18 @@ namespace DotNetCoreAsysnSample.Repository
             //Including orders since there's a foreign-key constraint and we need
             //to remove the orders in addition to the customer
             var customer = await _Context.Customers
-                                .Include(c => c.Orders)
-                                .SingleOrDefaultAsync(c => c.Id == id);
+                .Include(c => c.Orders)
+                .SingleOrDefaultAsync(c => c.Id == id);
             _Context.Remove(customer);
             try
             {
-                return (await _Context.SaveChangesAsync() > 0 ? true : false);
+                return await _Context.SaveChangesAsync() > 0 ? true : false;
             }
-            catch (System.Exception exp)
+            catch (Exception exp)
             {
                 _Logger.LogError($"Error in {nameof(DeleteCustomerAsync)}: " + exp.Message);
             }
+
             return false;
         }
     }

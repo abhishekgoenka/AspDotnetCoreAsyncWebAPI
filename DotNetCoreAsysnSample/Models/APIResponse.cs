@@ -3,7 +3,7 @@
 namespace DotNetCoreAsysnSample.Models
 {
     /// <summary>
-    /// Bad API response model
+    ///     Bad API response model
     /// </summary>
     public class APIResponse
     {
