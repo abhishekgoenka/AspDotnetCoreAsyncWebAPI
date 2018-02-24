@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using DotNetCoreAsysnSample.Models;
 using DotNetCoreAsysnSample.Repository;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using DotNetCoreAsysnSample.Models;
 
 namespace DotNetCoreAsysnSample.Controllers
 {
@@ -67,7 +67,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse { Status = false, Error = exp.Message });
+                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
             }
         }
 
@@ -90,46 +90,40 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse { Status = false, Error = exp.Message });
+                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
             }
         }
 
         /// <summary>
-        /// Create new customer
-        /// Route : POST : api/customers
+        ///     Create new customer
+        ///     Route : POST : api/customers
         /// </summary>
         /// <param name="customer">Customer</param>
         /// <returns>New customer and Route</returns>
         [HttpPost]
         [ProducesResponseType(typeof(Customer), 201)]
         [ProducesResponseType(typeof(APIResponse), 400)]
-        public async Task<ActionResult> CreateCustomer([FromBody]Customer customer)
+        public async Task<ActionResult> CreateCustomer([FromBody] Customer customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new APIResponse { Status = false, ModelState = ModelState });
-            }
+            if (!ModelState.IsValid) return BadRequest(new APIResponse {Status = false, ModelState = ModelState});
 
             try
             {
                 var newCustomer = await _CustomersRepository.InsertCustomerAsync(customer);
-                if (newCustomer == null)
-                {
-                    return BadRequest(new APIResponse { Status = false });
-                }
-                return CreatedAtRoute("GetCustomerRoute", new { id = newCustomer.Id },
-                        newCustomer);
+                if (newCustomer == null) return BadRequest(new APIResponse {Status = false});
+                return CreatedAtRoute("GetCustomerRoute", new {id = newCustomer.Id},
+                    newCustomer);
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse { Status = false });
+                return BadRequest(new APIResponse {Status = false});
             }
         }
 
         /// <summary>
-        /// Update customer
-        /// Route : PUT : api/customers/1
+        ///     Update customer
+        ///     Route : PUT : api/customers/1
         /// </summary>
         /// <param name="id">Customer Id</param>
         /// <param name="customer">Customer</param>
@@ -137,32 +131,26 @@ namespace DotNetCoreAsysnSample.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(Customer), 200)]
         [ProducesResponseType(typeof(APIResponse), 400)]
-        public async Task<ActionResult> UpdateCustomer(int id, [FromBody]Customer customer)
+        public async Task<ActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new APIResponse { Status = false, ModelState = ModelState });
-            }
+            if (!ModelState.IsValid) return BadRequest(new APIResponse {Status = false, ModelState = ModelState});
 
             try
             {
                 var status = await _CustomersRepository.UpdateCustomerAsync(customer);
-                if (!status)
-                {
-                    return BadRequest(new APIResponse { Status = false });
-                }
+                if (!status) return BadRequest(new APIResponse {Status = false});
                 return Ok(customer);
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse { Status = false });
+                return BadRequest(new APIResponse {Status = false});
             }
         }
 
         /// <summary>
-        /// Delete Customer
-        /// Route : PUT : api/customers/1
+        ///     Delete Customer
+        ///     Route : PUT : api/customers/1
         /// </summary>
         /// <param name="id">Customer Id</param>
         /// <returns>APIResponse</returns>
@@ -174,16 +162,13 @@ namespace DotNetCoreAsysnSample.Controllers
             try
             {
                 var status = await _CustomersRepository.DeleteCustomerAsync(id);
-                if (!status)
-                {
-                    return BadRequest(new APIResponse { Status = false });
-                }
-                return Ok(new APIResponse { Status = true });
+                if (!status) return BadRequest(new APIResponse {Status = false});
+                return Ok(new APIResponse {Status = true});
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse { Status = false });
+                return BadRequest(new APIResponse {Status = false});
             }
         }
     }
