@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DotNetCoreAsysnSample
 {
@@ -47,6 +48,26 @@ namespace DotNetCoreAsysnSample
 
             services.AddScoped<ICustomersRepositoryAsync, CustomersRepositoryAsync>();
             services.AddTransient<CustomersDbSeeder>();
+
+            //https://github.com/domaindrivendev/Swashbuckle.AspNetCore
+            //https://localhost:5000/swagger
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "ASP.NET Core Customers API",
+                    Description = "ASP.NET Core API Documentation",
+                    TermsOfService = "None",
+                    Contact = new Contact { Name = "Abhishek Goenka", Url = "https://twitter.com/govindkaran" },
+                    License = new License { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
+                });
+
+                //Add XML comment document by uncommenting the following
+                // var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MyApi.xml");
+                // options.IncludeXmlComments(filePath);
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +78,16 @@ namespace DotNetCoreAsysnSample
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
+            // Visit http://localhost:5000/swagger
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASP.NET Core Customers API");
+            });
 
             //disable CORS
             app.UseCors("AllowAnyOrigin");

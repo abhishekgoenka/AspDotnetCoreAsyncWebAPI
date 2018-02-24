@@ -13,3 +13,7 @@ Open DotNetCoreAsysnSample solution in Visual Studio 2017 or higher. Build and r
 > http://localhost:55959/api/customers/5
 
 > http://localhost:55959/api/customers/page/2/20
+
+# Swagger
+Generate beautiful API documentation, including a UI to explore and test operations, directly from your routes, controllers and models.
+> http://localhost:55959/swagger
