@@ -22,16 +22,16 @@ namespace DotNetCoreAsysnSample
         public void ConfigureServices(IServiceCollection services)
         {
             //Add SQL Server support
-            services.AddDbContext<CustomersDbContext>(context =>
-            {
-                context.UseSqlServer(Configuration.GetConnectionString("CustomersSqlServerConnectionString"));
-            });
+            // services.AddDbContext<CustomersDbContext>(context =>
+            // {
+            //     context.UseSqlServer(Configuration.GetConnectionString("CustomersSqlServerConnectionString"));
+            // });
 
             //Add SqLite support
-            //services.AddDbContext<CustomersDbContext>(context =>
-            //{
-            //    context.UseSqlite(Configuration.GetConnectionString("CustomersSqliteConnectionString"));
-            //});
+            services.AddDbContext<CustomersDbContext>(context =>
+            {
+               context.UseSqlite(Configuration.GetConnectionString("CustomersSqliteConnectionString"));
+            });
 
             services.AddMvc();
 
