@@ -48,5 +48,3 @@ Ethernet adapter Ethernet:
 ```
 
 Note: [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec/) supports identifying containers with name or hash. The name is used above. It runs a new command (as opposed to the [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint)) in a running container.
-
-```console
