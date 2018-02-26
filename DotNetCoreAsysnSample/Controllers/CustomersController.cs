@@ -9,17 +9,17 @@ using Microsoft.Extensions.Logging;
 
 namespace DotNetCoreAsysnSample.Controllers
 {
-    [Route("api/customers")]
+    [Route("api/v1/[controller]")]
     [EnableCors("AllowAnyOrigin")]
-    public class CustomersApiControllerAsync : Controller
+    public class CustomersController : Controller
     {
-        private readonly ICustomersRepositoryAsync _CustomersRepository;
-        private readonly ILogger _Logger;
+        private readonly ICustomersRepositoryAsync _customersRepository;
+        private readonly ILogger _logger;
 
-        public CustomersApiControllerAsync(ICustomersRepositoryAsync customersRepo, ILoggerFactory loggerFactory)
+        public CustomersController(ICustomersRepositoryAsync customersRepo, ILoggerFactory loggerFactory)
         {
-            _CustomersRepository = customersRepo;
-            _Logger = loggerFactory.CreateLogger(nameof(CustomersApiControllerAsync));
+            _customersRepository = customersRepo;
+            _logger = loggerFactory.CreateLogger(nameof(CustomersController));
         }
 
         /// <summary>
@@ -36,12 +36,12 @@ namespace DotNetCoreAsysnSample.Controllers
         {
             try
             {
-                var customers = await _CustomersRepository.GetCustomersAsync();
+                var customers = await _customersRepository.GetCustomersAsync();
                 return Ok(customers);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
+                _logger.LogError(exp.Message);
                 return BadRequest(new APIResponse {Status = false, Error = exp.Message});
             }
         }
@@ -60,13 +60,13 @@ namespace DotNetCoreAsysnSample.Controllers
         {
             try
             {
-                var pagingResult = await _CustomersRepository.GetCustomersPageAsync(skip, take);
+                var pagingResult = await _customersRepository.GetCustomersPageAsync(skip, take);
                 Response.Headers.Add("X-InlineCount", pagingResult.TotalRecords.ToString());
                 return Ok(pagingResult.Records);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
+                _logger.LogError(exp.Message);
                 return BadRequest(new APIResponse {Status = false, Error = exp.Message});
             }
         }
@@ -84,12 +84,12 @@ namespace DotNetCoreAsysnSample.Controllers
         {
             try
             {
-                var customer = await _CustomersRepository.GetCustomerAsync(id);
+                var customer = await _customersRepository.GetCustomerAsync(id);
                 return Ok(customer);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
+                _logger.LogError(exp.Message);
                 return BadRequest(new APIResponse {Status = false, Error = exp.Message});
             }
         }
@@ -109,14 +109,14 @@ namespace DotNetCoreAsysnSample.Controllers
 
             try
             {
-                var newCustomer = await _CustomersRepository.InsertCustomerAsync(customer);
+                var newCustomer = await _customersRepository.InsertCustomerAsync(customer);
                 if (newCustomer == null) return BadRequest(new APIResponse {Status = false});
                 return CreatedAtRoute("GetCustomerRoute", new {id = newCustomer.Id},
                     newCustomer);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
+                _logger.LogError(exp.Message);
                 return BadRequest(new APIResponse {Status = false});
             }
         }
@@ -137,13 +137,13 @@ namespace DotNetCoreAsysnSample.Controllers
 
             try
             {
-                var status = await _CustomersRepository.UpdateCustomerAsync(customer);
+                var status = await _customersRepository.UpdateCustomerAsync(customer);
                 if (!status) return BadRequest(new APIResponse {Status = false});
                 return Ok(customer);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
+                _logger.LogError(exp.Message);
                 return BadRequest(new APIResponse {Status = false});
             }
         }
@@ -161,13 +161,13 @@ namespace DotNetCoreAsysnSample.Controllers
         {
             try
             {
-                var status = await _CustomersRepository.DeleteCustomerAsync(id);
+                var status = await _customersRepository.DeleteCustomerAsync(id);
                 if (!status) return BadRequest(new APIResponse {Status = false});
                 return Ok(new APIResponse {Status = true});
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
+                _logger.LogError(exp.Message);
                 return BadRequest(new APIResponse {Status = false});
             }
         }
