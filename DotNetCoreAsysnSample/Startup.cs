@@ -1,4 +1,5 @@
-﻿using DotNetCoreAsysnSample.Repository;
+﻿using DotNetCoreAsysnSample.Infrastructure.Filters;
+using DotNetCoreAsysnSample.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerUI;
+
 namespace DotNetCoreAsysnSample
 {
     public class Startup
@@ -30,10 +31,13 @@ namespace DotNetCoreAsysnSample
             //Add SqLite support
             services.AddDbContext<CustomersDbContext>(context =>
             {
-               context.UseSqlite(Configuration.GetConnectionString("CustomersSqliteConnectionString"));
+                context.UseSqlite(Configuration.GetConnectionString("CustomersSqliteConnectionString"));
             });
 
-            services.AddMvc();
+            // Add framework services.
+            services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
+                .AddControllersAsServices(); //Injecting Controllers themselves thru DIFor further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
+
 
             //allow any origin
             services.AddCors(options =>

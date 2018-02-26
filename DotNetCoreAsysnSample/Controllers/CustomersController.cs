@@ -31,7 +31,7 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <response code="500">Oops! Can't create your product right now</response>
         [HttpGet]
         [ProducesResponseType(typeof(List<Customer>), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> Customers()
         {
             try
@@ -42,7 +42,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
+                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
             }
         }
 
@@ -55,7 +55,7 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>Customers of selected page</returns>
         [HttpGet("page/{skip}/{take}")]
         [ProducesResponseType(typeof(List<Customer>), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> CustomersPage(int skip, int take)
         {
             try
@@ -67,7 +67,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
+                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
             }
         }
 
@@ -79,7 +79,7 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>Customer</returns>
         [HttpGet("{id}", Name = "GetCustomerRoute")]
         [ProducesResponseType(typeof(Customer), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> Customers(int id)
         {
             try
@@ -90,7 +90,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
+                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
             }
         }
 
@@ -102,22 +102,22 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>New customer and Route</returns>
         [HttpPost]
         [ProducesResponseType(typeof(Customer), 201)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> CreateCustomer([FromBody] Customer customer)
         {
-            if (!ModelState.IsValid) return BadRequest(new APIResponse {Status = false, ModelState = ModelState});
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse {Status = false, ModelState = ModelState});
 
             try
             {
                 var newCustomer = await _customersRepository.InsertCustomerAsync(customer);
-                if (newCustomer == null) return BadRequest(new APIResponse {Status = false});
+                if (newCustomer == null) return BadRequest(new ApiResponse {Status = false});
                 return CreatedAtRoute("GetCustomerRoute", new {id = newCustomer.Id},
                     newCustomer);
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false});
+                return BadRequest(new ApiResponse {Status = false});
             }
         }
 
@@ -130,21 +130,21 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>Updated Customer</returns>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(Customer), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
         {
-            if (!ModelState.IsValid) return BadRequest(new APIResponse {Status = false, ModelState = ModelState});
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse {Status = false, ModelState = ModelState});
 
             try
             {
                 var status = await _customersRepository.UpdateCustomerAsync(customer);
-                if (!status) return BadRequest(new APIResponse {Status = false});
+                if (!status) return BadRequest(new ApiResponse {Status = false});
                 return Ok(customer);
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false});
+                return BadRequest(new ApiResponse {Status = false});
             }
         }
 
@@ -156,19 +156,19 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>APIResponse</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Customer), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> DeleteCustomer(int id)
         {
             try
             {
                 var status = await _customersRepository.DeleteCustomerAsync(id);
-                if (!status) return BadRequest(new APIResponse {Status = false});
-                return Ok(new APIResponse {Status = true});
+                if (!status) return BadRequest(new ApiResponse {Status = false});
+                return Ok(new ApiResponse {Status = true});
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false});
+                return BadRequest(new ApiResponse {Status = false});
             }
         }
     }

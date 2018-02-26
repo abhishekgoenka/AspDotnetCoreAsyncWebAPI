@@ -5,10 +5,11 @@ namespace DotNetCoreAsysnSample.Models
     /// <summary>
     ///     Bad API response model
     /// </summary>
-    public class APIResponse
+    public class ApiResponse
     {
         public bool Status { get; set; }
         public string Error { get; set; }
+        public object DeveloperMessage { get; set; }
         public ModelStateDictionary ModelState { get; set; }
     }
 }
