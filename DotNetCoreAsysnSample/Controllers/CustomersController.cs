@@ -9,17 +9,17 @@ using Microsoft.Extensions.Logging;
 
 namespace DotNetCoreAsysnSample.Controllers
 {
-    [Route("api/customers")]
+    [Route("api/v1/[controller]")]
     [EnableCors("AllowAnyOrigin")]
-    public class CustomersApiControllerAsync : Controller
+    public class CustomersController : Controller
     {
-        private readonly ICustomersRepositoryAsync _CustomersRepository;
-        private readonly ILogger _Logger;
+        private readonly ICustomersRepositoryAsync _customersRepository;
+        private readonly ILogger _logger;
 
-        public CustomersApiControllerAsync(ICustomersRepositoryAsync customersRepo, ILoggerFactory loggerFactory)
+        public CustomersController(ICustomersRepositoryAsync customersRepo, ILoggerFactory loggerFactory)
         {
-            _CustomersRepository = customersRepo;
-            _Logger = loggerFactory.CreateLogger(nameof(CustomersApiControllerAsync));
+            _customersRepository = customersRepo;
+            _logger = loggerFactory.CreateLogger(nameof(CustomersController));
         }
 
         /// <summary>
@@ -31,18 +31,18 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <response code="500">Oops! Can't create your product right now</response>
         [HttpGet]
         [ProducesResponseType(typeof(List<Customer>), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> Customers()
         {
             try
             {
-                var customers = await _CustomersRepository.GetCustomersAsync();
+                var customers = await _customersRepository.GetCustomersAsync();
                 return Ok(customers);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
+                _logger.LogError(exp.Message);
+                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
             }
         }
 
@@ -55,19 +55,19 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>Customers of selected page</returns>
         [HttpGet("page/{skip}/{take}")]
         [ProducesResponseType(typeof(List<Customer>), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> CustomersPage(int skip, int take)
         {
             try
             {
-                var pagingResult = await _CustomersRepository.GetCustomersPageAsync(skip, take);
+                var pagingResult = await _customersRepository.GetCustomersPageAsync(skip, take);
                 Response.Headers.Add("X-InlineCount", pagingResult.TotalRecords.ToString());
                 return Ok(pagingResult.Records);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
+                _logger.LogError(exp.Message);
+                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
             }
         }
 
@@ -79,18 +79,18 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>Customer</returns>
         [HttpGet("{id}", Name = "GetCustomerRoute")]
         [ProducesResponseType(typeof(Customer), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> Customers(int id)
         {
             try
             {
-                var customer = await _CustomersRepository.GetCustomerAsync(id);
+                var customer = await _customersRepository.GetCustomerAsync(id);
                 return Ok(customer);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false, Error = exp.Message});
+                _logger.LogError(exp.Message);
+                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
             }
         }
 
@@ -102,22 +102,22 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>New customer and Route</returns>
         [HttpPost]
         [ProducesResponseType(typeof(Customer), 201)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> CreateCustomer([FromBody] Customer customer)
         {
-            if (!ModelState.IsValid) return BadRequest(new APIResponse {Status = false, ModelState = ModelState});
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse {Status = false, ModelState = ModelState});
 
             try
             {
-                var newCustomer = await _CustomersRepository.InsertCustomerAsync(customer);
-                if (newCustomer == null) return BadRequest(new APIResponse {Status = false});
+                var newCustomer = await _customersRepository.InsertCustomerAsync(customer);
+                if (newCustomer == null) return BadRequest(new ApiResponse {Status = false});
                 return CreatedAtRoute("GetCustomerRoute", new {id = newCustomer.Id},
                     newCustomer);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false});
+                _logger.LogError(exp.Message);
+                return BadRequest(new ApiResponse {Status = false});
             }
         }
 
@@ -130,21 +130,21 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>Updated Customer</returns>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(Customer), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
         {
-            if (!ModelState.IsValid) return BadRequest(new APIResponse {Status = false, ModelState = ModelState});
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse {Status = false, ModelState = ModelState});
 
             try
             {
-                var status = await _CustomersRepository.UpdateCustomerAsync(customer);
-                if (!status) return BadRequest(new APIResponse {Status = false});
+                var status = await _customersRepository.UpdateCustomerAsync(customer);
+                if (!status) return BadRequest(new ApiResponse {Status = false});
                 return Ok(customer);
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false});
+                _logger.LogError(exp.Message);
+                return BadRequest(new ApiResponse {Status = false});
             }
         }
 
@@ -156,19 +156,19 @@ namespace DotNetCoreAsysnSample.Controllers
         /// <returns>APIResponse</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Customer), 200)]
-        [ProducesResponseType(typeof(APIResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> DeleteCustomer(int id)
         {
             try
             {
-                var status = await _CustomersRepository.DeleteCustomerAsync(id);
-                if (!status) return BadRequest(new APIResponse {Status = false});
-                return Ok(new APIResponse {Status = true});
+                var status = await _customersRepository.DeleteCustomerAsync(id);
+                if (!status) return BadRequest(new ApiResponse {Status = false});
+                return Ok(new ApiResponse {Status = true});
             }
             catch (Exception exp)
             {
-                _Logger.LogError(exp.Message);
-                return BadRequest(new APIResponse {Status = false});
+                _logger.LogError(exp.Message);
+                return BadRequest(new ApiResponse {Status = false});
             }
         }
     }
