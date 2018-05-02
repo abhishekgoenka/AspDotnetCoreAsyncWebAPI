@@ -1,4 +1,5 @@
 ﻿using DotNetCoreAsysnSample.Infrastructure.Filters;
+using DotNetCoreAsysnSample.Infrastructure.Handler;
 using DotNetCoreAsysnSample.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,6 +54,9 @@ namespace DotNetCoreAsysnSample
             services.AddScoped<ICustomersRepositoryAsync, CustomersRepositoryAsync>();
             services.AddTransient<CustomersDbSeeder>();
 
+            //todo: Add resilience framework for .NET Core like Polly, if using external service
+            // https://www.hanselman.com/blog/AddingResilienceAndTransientFaultHandlingToYourNETCoreHttpClientWithPolly.aspx
+
             //https://github.com/domaindrivendev/Swashbuckle.AspNetCore
             //https://localhost:5000/swagger
             services.AddSwaggerGen(options =>
@@ -77,8 +81,10 @@ namespace DotNetCoreAsysnSample
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
             CustomersDbSeeder customersDbSeeder)
         {
+            // http://www.binaryintellect.net/articles/f4e492f7-9eec-46ba-b316-0584907e3e84.aspx
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
