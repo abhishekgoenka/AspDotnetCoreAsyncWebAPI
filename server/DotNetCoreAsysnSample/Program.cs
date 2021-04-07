@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace DotNetCoreAsysnSample
@@ -8,15 +7,11 @@ namespace DotNetCoreAsysnSample
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()
-                .Build();
-        }
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+           WebHost.CreateDefaultBuilder(args)
+               .UseStartup<Startup>();
     }
 }

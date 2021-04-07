@@ -1,13 +1,13 @@
 ﻿using DotNetCoreAsysnSample.Infrastructure.Filters;
-using DotNetCoreAsysnSample.Infrastructure.Handler;
 using DotNetCoreAsysnSample.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace DotNetCoreAsysnSample
 {
@@ -61,14 +61,14 @@ namespace DotNetCoreAsysnSample
             //https://localhost:5000/swagger
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "ASP.NET Core Customers API",
                     Description = "ASP.NET Core API Documentation",
-                    TermsOfService = "None",
-                    Contact = new Contact {Name = "Abhishek Goenka", Url = "https://twitter.com/govindkaran"},
-                    License = new License {Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License"}
+                    TermsOfService = new System.Uri("https://twitter.com/govindkaran"),
+                    Contact = new OpenApiContact { Name = "Abhishek Goenka", Url = new System.Uri("https://twitter.com/govindkaran") },
+                    License = new OpenApiLicense { Name = "MIT", Url = new System.Uri("https://en.wikipedia.org/wiki/MIT_License") }
                 });
 
                 //Add XML comment document by uncommenting the following
@@ -78,12 +78,12 @@ namespace DotNetCoreAsysnSample
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,
             CustomersDbSeeder customersDbSeeder)
         {
             // http://www.binaryintellect.net/articles/f4e492f7-9eec-46ba-b316-0584907e3e84.aspx
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            //loggerFactory.AddDebug();
 
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
@@ -95,9 +95,16 @@ namespace DotNetCoreAsysnSample
             // Visit http://localhost:5000/swagger
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASP.NET Core Customers API"); });
 
+
+            app.UseRouting();
+
             //disable CORS
             app.UseCors("AllowAnyOrigin");
-            app.UseMvc();
+
+            app.UseEndpoints(e =>
+            {
+                e.MapControllers();
+            });
 
             //seed data
             customersDbSeeder.SeedAsync(app.ApplicationServices).Wait();
