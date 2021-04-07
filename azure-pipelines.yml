@@ -1,0 +1,57 @@
+# .NET with Angular
+# Build a .NET project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/ecosystems/dotnet-core
+
+# Set MyRunNumber
+variables: 
+  uiSource: "."
+  uiBuild: "$(uiSource)/dist"
+  BuildNumber: '1.0.0-CI-$(Build.BuildNumber)'
+  tag: '$(Build.BuildNumber)'
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+name: 1.0$(Rev:.r)
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+    
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+
+# - script: |
+#     npm install
+#     npm run build
+#   displayName: 'npm install and build'
+
+# - task: ArchiveFiles@2
+#   displayName: Archive
+#   inputs:
+#     rootFolderOrFile: '$(uiBuild)'
+#     includeRootFolder: true
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
+
