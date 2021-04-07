@@ -37,7 +37,7 @@ namespace DotNetCoreAsysnSample
 
             // Add framework services.
             services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
-                .AddControllersAsServices(); //Injecting Controllers themselves thru DIFor further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
+                .AddControllersAsServices(); //Injecting Controllers themselves through DIFor further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
 
 
             //allow any origin
