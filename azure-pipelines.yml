@@ -55,3 +55,9 @@ steps:
 #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 #     replaceExistingArchive: true
 
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifacts
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
