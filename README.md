@@ -1,11 +1,11 @@
 # .NET Core Async WebAPI
-This project demonstrates basic CRUD Web API operations using Async pattern in .NET Core 2.1. This demo application uses Entity Framework Core's async API to persist data.
+This project demonstrates basic CRUD Web API operations using Async pattern in .NET 5. This demo application uses Entity Framework Core's async API to persist data.
 
 # Before you begin
-Download and install [.NET Core SDK](https://go.microsoft.com/fwlink/?LinkID=660852&clcid=0x409).
+Download and install [.NET SDK](https://go.microsoft.com/fwlink/?LinkID=660852&clcid=0x409).
 
 # Run Application
-Open DotNetCoreAsysnSample solution in Visual Studio 2017 or higher. Build and run the solution. It would seed the data on first use.
+Open DotNetCoreAsysnSample solution in Visual Studio 2019 or higher. Build and run the solution. It would seed the data on first use.
 
 # Test APIs
 > http://localhost:55959/api/v1/customers
