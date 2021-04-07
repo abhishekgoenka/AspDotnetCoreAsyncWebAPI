@@ -1,5 +1,7 @@
 # .NET Core Async WebAPI
 [![Build Status](https://dev.azure.com/abhishekgoenkapublic/github-projects/_apis/build/status/AspDotnetCoreAsyncWebAPI-main-ci?branchName=master)](https://dev.azure.com/abhishekgoenkapublic/github-projects/_build/latest?definitionId=8&branchName=master)
+
+
 This project demonstrates basic CRUD Web API operations using Async pattern in .NET 5. This demo application uses Entity Framework Core's async API to persist data.
 
 # Before you begin
