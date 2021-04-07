@@ -16,7 +16,7 @@ variables:
 name: 1.0$(Rev:.r)
 
 trigger:
-- main
+- master
 
 pool:
   vmImage: 'windows-latest'
