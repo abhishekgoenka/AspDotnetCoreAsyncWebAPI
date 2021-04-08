@@ -29,6 +29,7 @@ namespace DotNetCoreAsysnSample.Models
         /// <summary>
         /// City latitude
         /// </summary>
+        [Column(TypeName = "decimal(7,4)")]
         public decimal Lat
         {
             get; set;
@@ -37,6 +38,7 @@ namespace DotNetCoreAsysnSample.Models
         /// <summary>
         /// City longitude
         /// </summary>
+        [Column(TypeName = "decimal(7,4)")]
         public decimal Lon { get; set; }
         #endregion
         /// <summary>

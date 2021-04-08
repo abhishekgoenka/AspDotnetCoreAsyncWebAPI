@@ -20,6 +20,8 @@ Open DotNetCoreAsysnSample solution in Visual Studio 2019 or higher. Build and r
    ```
 
 # Test APIs
+> https://localhost:5001/api/Seed/Import
+
 > https://localhost:5001/api/v1/customers
 
 > https://localhost:5001/api/v1/customers/5
