@@ -11,10 +11,10 @@ namespace DotNetCoreAsysnSample.Repository
 {
     public class CustomersRepositoryAsync : ICustomersRepositoryAsync
     {
-        private readonly CustomersDbContext _Context;
+        private readonly ApplicationDbContext _Context;
         private readonly ILogger _Logger;
 
-        public CustomersRepositoryAsync(CustomersDbContext context, ILoggerFactory loggerFactory)
+        public CustomersRepositoryAsync(ApplicationDbContext context, ILoggerFactory loggerFactory)
         {
             _Context = context;
             _Logger = loggerFactory.CreateLogger("CustomersRepository");

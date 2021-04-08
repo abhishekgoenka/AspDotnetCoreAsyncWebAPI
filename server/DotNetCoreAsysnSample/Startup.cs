@@ -30,9 +30,9 @@ namespace DotNetCoreAsysnSample
             // });
 
             //Add SqLite support
-            services.AddDbContext<CustomersDbContext>(context =>
+            services.AddDbContext<ApplicationDbContext>(context =>
             {
-                context.UseSqlite(Configuration.GetConnectionString("CustomersSqliteConnectionString"));
+                context.UseSqlite(Configuration.GetConnectionString("sqliteConnectionString"));
             });
 
             // Add framework services.

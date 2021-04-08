@@ -6,9 +6,9 @@ namespace DotNetCoreAsysnSample.Repository
     /// <summary>
     ///     Build dbContext using EF core
     /// </summary>
-    public class CustomersDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public CustomersDbContext(DbContextOptions<CustomersDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 

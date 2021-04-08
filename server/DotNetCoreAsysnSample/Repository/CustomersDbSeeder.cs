@@ -25,14 +25,14 @@ namespace DotNetCoreAsysnSample.Repository
             //Based on EF team's example at https://github.com/aspnet/MusicStore/blob/dev/samples/MusicStore/Models/SampleData.cs
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var customersDb = serviceScope.ServiceProvider.GetService<CustomersDbContext>();
+                var customersDb = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 if (await customersDb.Database.EnsureCreatedAsync())
                     if (!await customersDb.Customers.AnyAsync())
                         await InsertCustomersSampleData(customersDb);
             }
         }
 
-        public async Task InsertCustomersSampleData(CustomersDbContext db)
+        public async Task InsertCustomersSampleData(ApplicationDbContext db)
         {
             var customers = GetCustomers();
             db.Customers.AddRange(customers);
