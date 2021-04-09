@@ -40,6 +40,16 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+  displayName: 'npm install and build'
 
 # - script: |
 #     npm install
@@ -58,6 +68,13 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
   inputs:
+    PathtoPublish: 'client/dist'
+    ArtifactName: 'client'
+    publishLocation: 'Container'
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifacts
+  inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    ArtifactName: 'server'
     publishLocation: 'Container'
