@@ -55,7 +55,7 @@ steps:
   workingDirectory: client
 
 - script: |
-    npm run build --prod
+    npm run build
   displayName: 'Angular build'
   workingDirectory: client
 
