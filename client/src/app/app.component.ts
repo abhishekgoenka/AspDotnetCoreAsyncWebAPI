@@ -21,6 +21,11 @@ import { Component } from "@angular/core";
                 >Cities</a
               >
             </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/countries']"
+                >Countries</a
+              >
+            </li>
           </ul>
         </div>
       </nav>

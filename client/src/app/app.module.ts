@@ -6,15 +6,18 @@ import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 import { CitiesComponent } from "./cities/cities.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
+import { AngularMaterialModule } from "./material.module";
+import { CountriesComponent } from "./countries/countries.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, CitiesComponent],
+  declarations: [AppComponent, HomeComponent, CitiesComponent, CountriesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,27 +1,25 @@
-import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { City } from "./city";
-import { MatTableDataSource } from "@angular/material/table";
+import { ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, SortDirection } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { Country } from "./country";
 
 @Component({
-  selector: "app-cities",
-  templateUrl: "./cities.component.html",
-  styleUrls: ["./cities.component.css"],
+  selector: "app-countries",
+  templateUrl: "./countries.component.html",
+  styleUrls: ["./countries.component.css"],
 })
-export class CitiesComponent implements OnInit {
-  public displayedColumns: string[] = ["id", "name", "lat", "lon"];
-  public cities!: MatTableDataSource<City>;
+export class CountriesComponent implements OnInit {
+  public displayedColumns: string[] = ["id", "name", "iso2", "iso3"];
+  public countries!: MatTableDataSource<Country>;
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
-
   public defaultSortColumn: string = "name";
   public defaultSortOrder: SortDirection = "asc";
-
   defaultFilterColumn: string = "name";
   filterQuery: string = "";
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -49,7 +47,7 @@ export class CitiesComponent implements OnInit {
   }
 
   getData(event: PageEvent) {
-    var url = "api/Cities";
+    var url = "api/Countries";
     var params = new HttpParams()
       .set("pageIndex", event.pageIndex.toString())
       .set("pageSize", event.pageSize.toString())
@@ -71,7 +69,7 @@ export class CitiesComponent implements OnInit {
           this.paginator.length = result.totalCount;
           this.paginator.pageIndex = result.pageIndex;
           this.paginator.pageSize = result.pageSize;
-          this.cities = new MatTableDataSource<City>(result.data);
+          this.countries = new MatTableDataSource<Country>(result.data);
         },
         (error) => console.error(error)
       );
