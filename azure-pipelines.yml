@@ -47,9 +47,15 @@ steps:
 
 - script: |
     npm install -g @angular/cli
+  displayName: 'Angular CLI'
+
+- script: |
     npm install
+  displayName: 'npm install'
+
+- script: |
     ng build --prod
-  displayName: 'npm install and build'
+  displayName: 'Angular build'
 
 # - script: |
 #     npm install
@@ -66,14 +72,14 @@ steps:
 #     replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
-  displayName: Publish Artifacts
+  displayName: Publish Client Artifacts
   inputs:
     PathtoPublish: 'client/dist'
     ArtifactName: 'client'
     publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1
-  displayName: Publish Artifacts
+  displayName: Publish Server Artifacts
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'server'
