@@ -52,10 +52,12 @@ steps:
 - script: |
     npm install
   displayName: 'npm install'
+  workingDirectory: client
 
 - script: |
     npm run build --prod
   displayName: 'Angular build'
+  workingDirectory: client
 
 # - script: |
 #     npm install
