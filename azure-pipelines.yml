@@ -54,7 +54,7 @@ steps:
   displayName: 'npm install'
 
 - script: |
-    ng build --prod
+    npm run build --prod
   displayName: 'Angular build'
 
 # - script: |
