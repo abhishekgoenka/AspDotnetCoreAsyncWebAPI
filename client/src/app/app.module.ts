@@ -9,9 +9,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule } from "@angular/common/http";
 import { AngularMaterialModule } from "./material.module";
 import { CountriesComponent } from "./countries/countries.component";
+import { NavMenuComponent } from "./nav-menu/nav-menu.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, CitiesComponent, CountriesComponent],
+  declarations: [AppComponent, NavMenuComponent, HomeComponent, CitiesComponent, CountriesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
