@@ -8,16 +8,7 @@ This project demonstrates basic CRUD Web API operations using Async pattern in .
 Download and install [.NET SDK](https://go.microsoft.com/fwlink/?LinkID=660852&clcid=0x409).
 
 # Run Application
-Open DotNetCoreAsysnSample solution in Visual Studio 2019 or higher. Build and run the solution. It would seed the data on first use.
-
-1. Goto `server` folder and run 
-   ```
-   dotnet run
-   ```
-2. Goto `client` folder and run 
-   ```
-   npm run start
-   ```
+Open DotNetCoreAsysnSample solution in Visual Studio 2019 or higher. Build and run the solution. It would seed the data on first use. Run `server.bat`
 
 # Test APIs
 > https://localhost:5001/api/Seed/Import
