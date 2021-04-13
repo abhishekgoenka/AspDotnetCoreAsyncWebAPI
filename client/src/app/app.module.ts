@@ -10,15 +10,25 @@ import { HttpClientModule } from "@angular/common/http";
 import { AngularMaterialModule } from "./material.module";
 import { CountriesComponent } from "./countries/countries.component";
 import { NavMenuComponent } from "./nav-menu/nav-menu.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { CityEditComponent } from "./city-edit/city-edit.component";
 
 @NgModule({
-  declarations: [AppComponent, NavMenuComponent, HomeComponent, CitiesComponent, CountriesComponent],
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    HomeComponent,
+    CitiesComponent,
+    CityEditComponent,
+    CountriesComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
