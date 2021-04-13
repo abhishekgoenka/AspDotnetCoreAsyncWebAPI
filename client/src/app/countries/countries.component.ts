@@ -4,6 +4,8 @@ import { Component, OnInit } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, SortDirection } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Subject } from "rxjs";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { Country } from "./country";
 
 @Component({
@@ -22,6 +24,7 @@ export class CountriesComponent implements OnInit {
   filterQuery: string = "";
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  filterTextChanged: Subject<string> = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +35,7 @@ export class CountriesComponent implements OnInit {
   loadData2(event: Event) {
     const { target } = event;
     if (target) {
-      this.loadData((<any>target).value);
+      this.onFilterTextChanged((<any>target).value);
     }
   }
 
@@ -73,5 +76,17 @@ export class CountriesComponent implements OnInit {
         },
         (error) => console.error(error)
       );
+  }
+
+  // debounce filter text changes
+  onFilterTextChanged(filterText: string) {
+    if (this.filterTextChanged.observers.length === 0) {
+      this.filterTextChanged
+        .pipe(debounceTime(1000), distinctUntilChanged())
+        .subscribe((query) => {
+          this.loadData(query);
+        });
+    }
+    this.filterTextChanged.next(filterText);
   }
 }
