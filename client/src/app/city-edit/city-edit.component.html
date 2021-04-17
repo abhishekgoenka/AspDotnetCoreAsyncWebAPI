@@ -21,13 +21,7 @@
         class="form-control"
         required
       />
-      <div
-        *ngIf="
-          form.get('name').invalid &&
-          (form.get('name').dirty || form.get('name').touched)
-        "
-        class="invalid-feedback"
-      >
+      <div *ngIf="hasError('name')" class="invalid-feedback">
         <div *ngIf="form.get('name').errors?.required">Name is required.</div>
       </div>
     </div>
@@ -42,13 +36,7 @@
         placeholder="Latitude..."
         class="form-control"
       />
-      <div
-        *ngIf="
-          form.get('lat').invalid &&
-          (form.get('lat').dirty || form.get('lat').touched)
-        "
-        class="invalid-feedback"
-      >
+      <div *ngIf="hasError('lat')" class="invalid-feedback">
         <div *ngIf="form.get('lat').errors?.required">
           Latitude is required.
         </div>
@@ -65,13 +53,7 @@
         placeholder="Latitude..."
         class="form-control"
       />
-      <div
-        *ngIf="
-          form.get('lon').invalid &&
-          (form.get('lon').dirty || form.get('lon').touched)
-        "
-        class="invalid-feedback"
-      >
+      <div *ngIf="hasError('lon')" class="invalid-feedback">
         <div *ngIf="form.get('lon').errors?.required">
           Longitude is required.
         </div>
@@ -87,13 +69,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div
-        *ngIf="
-          form.get('countryId').invalid &&
-          (form.get('countryId').dirty || form.get('countryId').touched)
-        "
-        class="invalid-feedback"
-      >
+      <div *ngIf="hasError('countryId')" class="invalid-feedback">
         <div *ngIf="form.get('countryId').errors?.required">
           Please select a Country.
         </div>
