@@ -117,19 +117,6 @@ export class CountryEditComponent extends BaseFormComponent implements OnInit {
             return result ? { isDupeField: true } : null;
           })
         );
-
-      // var params = new HttpParams()
-      //   .set("countryId", this.id ? this.id.toString() : "0")
-      //   .set("fieldName", fieldName)
-      //   .set("fieldValue", control.value);
-      // var url = "api/Countries/IsDupeField";
-      // return this.http
-      //   .post<boolean>(url, null, { params })
-      //   .pipe(
-      //     map((result) => {
-      //       return result ? { isDupeField: true } : null;
-      //     })
-      //   );
     };
   }
 }
