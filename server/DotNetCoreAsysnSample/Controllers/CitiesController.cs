@@ -1,4 +1,5 @@
 ﻿using DotNetCoreAsysnSample.Models;
+using DotNetCoreAsysnSample.Models.DTO;
 using DotNetCoreAsysnSample.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,9 +25,17 @@ namespace DotNetCoreAsysnSample.Controllers
         //// GET: api/Cities/0/10
         [HttpGet]
         //[Route("{pageIndex?}/{pageSize?}")]
-        public async Task<ActionResult<ApiResult<City>>> GetCities(int pageIndex = 0, int pageSize = 10, string sortColumn = null, string sortOrder = null, string filterColumn = null, string filterQuery = null)
+        public async Task<ActionResult<ApiResult<CityDTO>>> GetCities(int pageIndex = 0, int pageSize = 10, string sortColumn = null, string sortOrder = null, string filterColumn = null, string filterQuery = null)
         {
-            return await ApiResult<City>.CreateAsync(_context.Cities, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+            return await ApiResult<CityDTO>.CreateAsync(_context.Cities.Select(c => new CityDTO()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Lat = c.Lat,
+                Lon = c.Lon,
+                CountryId = c.Country.Id,
+                CountryName = c.Country.Name
+            }), pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
         }
 
         // GET: api/Cities/5
