@@ -1,4 +1,3 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
 import { ViewChild } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
@@ -6,7 +5,9 @@ import { MatSort, SortDirection } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Subject } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { ApiResult } from "../base.service";
 import { Country } from "./country";
+import { CountryService } from "./country.service";
 
 @Component({
   selector: "app-countries",
@@ -14,7 +15,13 @@ import { Country } from "./country";
   styleUrls: ["./countries.component.css"],
 })
 export class CountriesComponent implements OnInit {
-  public displayedColumns: string[] = ["id", "name", "iso2", "iso3", "totCities"];
+  public displayedColumns: string[] = [
+    "id",
+    "name",
+    "iso2",
+    "iso3",
+    "totCities",
+  ];
   public countries!: MatTableDataSource<Country>;
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
@@ -26,7 +33,7 @@ export class CountriesComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private countryService: CountryService) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -50,23 +57,20 @@ export class CountriesComponent implements OnInit {
   }
 
   getData(event: PageEvent) {
-    var url = "api/Countries";
-    var params = new HttpParams()
-      .set("pageIndex", event.pageIndex.toString())
-      .set("pageSize", event.pageSize.toString())
-      .set("sortColumn", this.sort ? this.sort.active : this.defaultSortColumn)
-      .set(
-        "sortOrder",
-        this.sort ? this.sort.direction : this.defaultSortOrder
-      );
+    var sortColumn = this.sort ? this.sort.active : this.defaultSortColumn;
+    var sortOrder = this.sort ? this.sort.direction : this.defaultSortOrder;
+    var filterColumn = this.filterQuery ? this.defaultFilterColumn : null;
+    var filterQuery = this.filterQuery ? this.filterQuery : null;
 
-    if (this.filterQuery) {
-      params = params
-        .set("filterColumn", this.defaultFilterColumn)
-        .set("filterQuery", this.filterQuery);
-    }
-    this.http
-      .get<any>(url, { params })
+    this.countryService
+      .getData<ApiResult<Country>>(
+        event.pageIndex,
+        event.pageSize,
+        sortColumn,
+        sortOrder,
+        filterColumn,
+        filterQuery
+      )
       .subscribe(
         (result) => {
           this.paginator.length = result.totalCount;
