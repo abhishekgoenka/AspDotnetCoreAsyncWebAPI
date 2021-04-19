@@ -34,7 +34,7 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
   // and not NULL when we're editing an existing one.
   id?: number;
   // the countries array for the select
-  countries: Country[];
+  countries: Observable<ApiResult<Country>>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -138,11 +138,13 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
 
   loadCountries() {
     // fetch all the countries from the server
-    this.cityService
-      .getCountries<ApiResult<Country>>(0, 9999, "name", null, null, null)
-      .subscribe(
-        (result) => (this.countries = result.data),
-        (error) => console.error(error)
-      );
+    this.countries = this.cityService.getCountries<ApiResult<Country>>(
+      0,
+      9999,
+      "name",
+      null,
+      null,
+      null
+    );
   }
 }

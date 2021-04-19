@@ -3,6 +3,7 @@ using DotNetCoreAsysnSample.Models.DTO;
 using DotNetCoreAsysnSample.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,10 +14,12 @@ namespace DotNetCoreAsysnSample.Controllers
     public class CitiesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<CitiesController> logger;
 
-        public CitiesController(ApplicationDbContext context)
+        public CitiesController(ApplicationDbContext context, ILogger<CitiesController> logger)
         {
             _context = context;
+            this.logger = logger;
         }
 
         // GET: api/Cities
@@ -27,6 +30,7 @@ namespace DotNetCoreAsysnSample.Controllers
         //[Route("{pageIndex?}/{pageSize?}")]
         public async Task<ActionResult<ApiResult<CityDTO>>> GetCities(int pageIndex = 0, int pageSize = 10, string sortColumn = null, string sortOrder = null, string filterColumn = null, string filterQuery = null)
         {
+            logger.LogInformation("Getting cities...");
             return await ApiResult<CityDTO>.CreateAsync(_context.Cities.Select(c => new CityDTO()
             {
                 Id = c.Id,

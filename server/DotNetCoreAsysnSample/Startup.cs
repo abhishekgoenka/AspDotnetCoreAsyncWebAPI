@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace DotNetCoreAsysnSample
 {
@@ -105,6 +106,9 @@ namespace DotNetCoreAsysnSample
             {
                 e.MapControllers();
             });
+
+            // Use the Serilog request logging middleware to log HTTP requests.
+            app.UseSerilogRequestLogging();
 
             //seed data
             customersDbSeeder.SeedAsync(app.ApplicationServices).Wait();
