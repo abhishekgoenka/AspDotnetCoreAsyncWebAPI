@@ -28,35 +28,29 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
     
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: Server Build
   inputs:
     command: build
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: Server Test
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)' 
 
-- script: dotnet test ".\server\DotNetCoreAsysnSample.Tests\DotNetCoreAsysnSample.Tests.csproj" --logger trx
+- script: |
+    dotnet test ".\server\DotNetCoreAsysnSample.Tests\DotNetCoreAsysnSample.Tests.csproj" --logger trx
+  displayName: Generate test trx file
+
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
 
 - task: NodeTool@0
   inputs:
@@ -77,30 +71,16 @@ steps:
   displayName: 'Angular build'
   workingDirectory: client
 
-# - script: |
-#     npm install
-#     npm run build
-#   displayName: 'npm install and build'
-
-# - task: ArchiveFiles@2
-#   displayName: Archive
-#   inputs:
-#     rootFolderOrFile: '$(uiBuild)'
-#     includeRootFolder: true
-#     archiveType: 'zip'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
-
 - task: PublishBuildArtifacts@1
   displayName: Publish Client Artifacts
   inputs:
-    PathtoPublish: 'client/dist'
+    PathtoPublish: 'client/dist/app'
     ArtifactName: 'client'
     publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Server Artifacts
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: 'server/DotNetCoreAsysnSample/bin/Release/net5.0'
     ArtifactName: 'server'
     publishLocation: 'Container'
