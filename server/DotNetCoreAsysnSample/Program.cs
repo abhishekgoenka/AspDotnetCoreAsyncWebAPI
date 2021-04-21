@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.MSSqlServer;
 using System;
 using System.IO;
 
@@ -17,7 +15,11 @@ namespace DotNetCoreAsysnSample
                 .AddJsonFile(string.Format("appsettings.{0}.json", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"), optional: true, reloadOnChange: true)
                 .AddUserSecrets<Startup>(optional: true, reloadOnChange: true).Build();
 
-            Log.Logger = new LoggerConfiguration().WriteTo.MSSqlServer(connectionString: configuration.GetConnectionString("SerilogConnection"), restrictedToMinimumLevel: LogEventLevel.Information, sinkOptions: new MSSqlServerSinkOptions { TableName = "LogEvents", AutoCreateSqlTable = true }).WriteTo.Console().CreateLogger();
+            // for sql server
+            //Log.Logger = new LoggerConfiguration().WriteTo.MSSqlServer(connectionString: configuration.GetConnectionString("SerilogConnection"), restrictedToMinimumLevel: LogEventLevel.Information, sinkOptions: new MSSqlServerSinkOptions { TableName = "LogEvents", AutoCreateSqlTable = true }).WriteTo.Console().CreateLogger();
+
+            // add SQLite logger
+            Log.Logger = new LoggerConfiguration().WriteTo.SQLite(sqliteDbPath: $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}{configuration.GetConnectionString("sqliteDbPath")}").WriteTo.Console().CreateLogger();
 
             CreateWebHostBuilder(args).UseSerilog().Build().Run();
         }
