@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DotNetCoreAsysnSample.Models;
+﻿using DotNetCoreAsysnSample.Models;
 using DotNetCoreAsysnSample.Repository;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotNetCoreAsysnSample.Controllers
 {
@@ -42,7 +42,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
+                return BadRequest(new ApiResponse { Status = false, Error = exp.Message });
             }
         }
 
@@ -67,7 +67,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
+                return BadRequest(new ApiResponse { Status = false, Error = exp.Message });
             }
         }
 
@@ -90,7 +90,7 @@ namespace DotNetCoreAsysnSample.Controllers
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new ApiResponse {Status = false, Error = exp.Message});
+                return BadRequest(new ApiResponse { Status = false, Error = exp.Message });
             }
         }
 
@@ -105,19 +105,19 @@ namespace DotNetCoreAsysnSample.Controllers
         [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> CreateCustomer([FromBody] Customer customer)
         {
-            if (!ModelState.IsValid) return BadRequest(new ApiResponse {Status = false, ModelState = ModelState});
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse { Status = false, ModelState = ModelState });
 
             try
             {
                 var newCustomer = await _customersRepository.InsertCustomerAsync(customer);
-                if (newCustomer == null) return BadRequest(new ApiResponse {Status = false});
-                return CreatedAtRoute("GetCustomerRoute", new {id = newCustomer.Id},
+                if (newCustomer == null) return BadRequest(new ApiResponse { Status = false });
+                return CreatedAtRoute("GetCustomerRoute", new { id = newCustomer.Id },
                     newCustomer);
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new ApiResponse {Status = false});
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
@@ -133,18 +133,18 @@ namespace DotNetCoreAsysnSample.Controllers
         [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
         {
-            if (!ModelState.IsValid) return BadRequest(new ApiResponse {Status = false, ModelState = ModelState});
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse { Status = false, ModelState = ModelState });
 
             try
             {
                 var status = await _customersRepository.UpdateCustomerAsync(customer);
-                if (!status) return BadRequest(new ApiResponse {Status = false});
+                if (!status) return BadRequest(new ApiResponse { Status = false });
                 return Ok(customer);
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new ApiResponse {Status = false});
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
@@ -162,13 +162,13 @@ namespace DotNetCoreAsysnSample.Controllers
             try
             {
                 var status = await _customersRepository.DeleteCustomerAsync(id);
-                if (!status) return BadRequest(new ApiResponse {Status = false});
-                return Ok(new ApiResponse {Status = true});
+                if (!status) return BadRequest(new ApiResponse { Status = false });
+                return Ok(new ApiResponse { Status = true });
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new ApiResponse {Status = false});
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
     }

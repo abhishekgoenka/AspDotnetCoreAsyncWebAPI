@@ -1,5 +1,4 @@
-﻿using System.Net;
-using DotNetCoreAsysnSample.Infrastructure.ActionResult;
+﻿using DotNetCoreAsysnSample.Infrastructure.ActionResult;
 using DotNetCoreAsysnSample.Infrastructure.Exceptions;
 using DotNetCoreAsysnSample.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace DotNetCoreAsysnSample.Infrastructure.Filters
 {
@@ -37,7 +37,7 @@ namespace DotNetCoreAsysnSample.Infrastructure.Filters
                 // Result assigned to a result object but in destiny the response is empty. This is a known bug of .net core 1.1
                 //It will be fixed in .net core 1.1.2. See https://github.com/aspnet/Mvc/issues/5594 for more information
                 context.Result = new BadRequestObjectResult(json);
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             else
             {
@@ -52,7 +52,7 @@ namespace DotNetCoreAsysnSample.Infrastructure.Filters
                 // Result assigned to a result object but in destiny the response is empty. This is a known bug of .net core 1.1
                 // It will be fixed in .net core 1.1.2. See https://github.com/aspnet/Mvc/issues/5594 for more information
                 context.Result = new InternalServerErrorObjectResult(json);
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 
             context.ExceptionHandled = true;

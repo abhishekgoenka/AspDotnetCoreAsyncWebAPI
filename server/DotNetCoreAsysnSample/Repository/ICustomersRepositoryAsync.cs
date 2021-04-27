@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using DotNetCoreAsysnSample.Models;
+﻿using DotNetCoreAsysnSample.Models;
 using DotNetCoreAsysnSample.ViewModel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotNetCoreAsysnSample.Repository
 {

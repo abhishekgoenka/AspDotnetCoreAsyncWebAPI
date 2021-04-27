@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DotNetCoreAsysnSample.Models;
+﻿using DotNetCoreAsysnSample.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotNetCoreAsysnSample.Repository
 {
@@ -176,8 +176,8 @@ namespace DotNetCoreAsysnSample.Repository
                     Zip = zip + i
                 };
 
-                var firstOrder = (int) Math.Floor(random.NextDouble() * orders.Count);
-                var lastOrder = (int) Math.Floor(random.NextDouble() * orders.Count);
+                var firstOrder = (int)Math.Floor(random.NextDouble() * orders.Count);
+                var lastOrder = (int)Math.Floor(random.NextDouble() * orders.Count);
 
                 if (firstOrder > lastOrder)
                 {
