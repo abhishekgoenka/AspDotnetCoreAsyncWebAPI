@@ -32,7 +32,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./server/DotNetCoreAsysnSample
           file: ./server/DotNetCoreAsysnSample/aspnetcore.release.dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/dotnetcoreasysnsample:latest
