@@ -1,39 +1,24 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 
-MAINTAINER Abhishek Goenka
+EXPOSE 80
+EXPOSE 443
 
 # Copy csproj and restore as distinct layers
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
 COPY *.csproj ./
 RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release -o out
+WORKDIR "/src"
+RUN dotnet build "DotNetCoreAsysnSample.csproj" -c Release -o /app/build
 
-# Set Environment Variables
-ENV DOTNET_USE_POLLING_FILE_WATCHER=1
-# ENV ASPNETCORE_URLS=http://*:5000
+FROM build AS publish
+RUN dotnet publish "DotNetCoreAsysnSample.csproj" -c Release -o /app/publish
 
-# Build runtime image
-FROM microsoft/aspnetcore:2.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "DotNetCoreAsysnSample.dll"]
-
-
-# FROM microsoft/aspnetcore
-
-# MAINTAINER Abhishek Goenka
-
-# COPY . /var/www
-# WORKDIR /var/www
-
-# # VOLUME [ "/var/www" ]
-
-# ENV DOTNET_USE_POLLING_FILE_WATCHER=1
-# ENV ASPNETCORE_URLS=http://*:5000
-
-# # WORKDIR /var/www/aspnetcoreapp
-
-# CMD ["/bin/bash", "-c", "dotnet restore && dotnet run"]
