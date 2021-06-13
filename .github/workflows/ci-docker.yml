@@ -35,4 +35,4 @@ jobs:
           context: ./server/DotNetCoreAsysnSample
           file: ./server/DotNetCoreAsysnSample/aspnetcore.release.dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dotnetcoreasysnsample:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dotnetcoreasysnsample-api:latest
