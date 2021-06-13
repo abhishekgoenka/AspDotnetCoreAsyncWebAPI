@@ -25,7 +25,7 @@ namespace DotNetCoreAsysnSample
                 // for sql server
                 Log.Logger = new LoggerConfiguration().WriteTo.MSSqlServer(connectionString: configuration.GetConnectionString("SerilogConnection"), restrictedToMinimumLevel: LogEventLevel.Information, sinkOptions: new MSSqlServerSinkOptions { TableName = "LogEvents", AutoCreateSqlTable = true }).WriteTo.Console().CreateLogger();
 
-                var SEQ_URL = Environment.GetEnvironmentVariable("SEQ_URL") ?? "http://localhost:5341");
+                var SEQ_URL = Environment.GetEnvironmentVariable("SEQ_URL") ?? "http://localhost:5341";
 
                 Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
