@@ -25,6 +25,8 @@ namespace DotNetCoreAsysnSample
                 // for sql server
                 Log.Logger = new LoggerConfiguration().WriteTo.MSSqlServer(connectionString: configuration.GetConnectionString("SerilogConnection"), restrictedToMinimumLevel: LogEventLevel.Information, sinkOptions: new MSSqlServerSinkOptions { TableName = "LogEvents", AutoCreateSqlTable = true }).WriteTo.Console().CreateLogger();
 
+                var SEQ_URL = Environment.GetEnvironmentVariable("SEQ_URL") ?? "http://localhost:5341");
+
                 Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
@@ -33,7 +35,7 @@ namespace DotNetCoreAsysnSample
                 // available sinks: https://github.com/serilog/serilog/wiki/Provided-Sinks
                 // Seq: https://datalust.co/seq
                 // Seq with Docker: https://docs.datalust.co/docs/getting-started-with-docker
-                .WriteTo.Seq(serverUrl: "http://dotnetcoreasysnsample-seq:5341")
+                .WriteTo.Seq(serverUrl: SEQ_URL)
                 .WriteTo.Console()
                 .CreateLogger();
             }

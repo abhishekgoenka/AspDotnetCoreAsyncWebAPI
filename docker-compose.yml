@@ -18,6 +18,7 @@ services:
       - "8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - SEQ_URL=http://dotnetcoreasysnsample-seq:5341
     depends_on: 
       - dotnetcoreasysnsample-db
       - dotnetcoreasysnsample-seq
