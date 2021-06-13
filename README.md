@@ -30,5 +30,11 @@ Generate beautiful API documentation, including a UI to explore and test operati
 ## Seed database
 Open swagger URL in browser `http://localhost:8080/swagger/index.html` and execute `/api/Seed/Import` API.
 
-## Seq URL
-> http://0.0.0.0:8005
+### Seq URL
+> http://localhost:8005
+
+### .NET API
+> http://localhost:8080/swagger/
+
+### Angular Client
+> http://localhost/
