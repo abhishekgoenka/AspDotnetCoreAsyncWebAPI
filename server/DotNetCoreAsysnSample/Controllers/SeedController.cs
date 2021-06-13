@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using OfficeOpenXml;
 using System;
 using System.IO;
 using System.Linq;
-using System.Security;
 using System.Threading.Tasks;
 
 namespace DotNetCoreAsysnSample.Controllers

@@ -1,6 +1,7 @@
 ﻿using DotNetCoreAsysnSample.Models;
 using DotNetCoreAsysnSample.Models.DTO;
 using DotNetCoreAsysnSample.Repository;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DotNetCoreAsysnSample.Controllers
 {
+    [EnableCors("AllowAnyOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CitiesController : ControllerBase
