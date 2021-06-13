@@ -2,8 +2,10 @@
 [![Docker Image CI](https://github.com/abhishekgoenka/AspDotnetCoreAsyncWebAPI/actions/workflows/ci-docker.yml/badge.svg)](https://github.com/abhishekgoenka/AspDotnetCoreAsyncWebAPI/actions/workflows/ci-docker.yml)
 [![Build Status](https://dev.azure.com/abhishekgoenkapublic/github-projects/_apis/build/status/AspDotnetCoreAsyncWebAPI-main-ci?branchName=master)](https://dev.azure.com/abhishekgoenkapublic/github-projects/_build/latest?definitionId=8&branchName=master)
 
+This project demonstrates basic CRUD Web API operations using Async pattern in .NET 5. This demo application uses Entity Framework Core's async API to persist data. The client is built in Angular framework using material theme.
 
-This project demonstrates basic CRUD Web API operations using Async pattern in .NET 5. This demo application uses Entity Framework Core's async API to persist data.
+The project publishes docker images for web-api and angular client. The project uses serilog(seq) for logging infrastructure.
+
 
 # Before you begin
 Download and install [.NET SDK](https://go.microsoft.com/fwlink/?LinkID=660852&clcid=0x409).
