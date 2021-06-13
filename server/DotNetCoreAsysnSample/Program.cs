@@ -40,14 +40,33 @@ namespace DotNetCoreAsysnSample
             else
             {
                 // add SQLite logger
-                Log.Logger = new LoggerConfiguration().WriteTo.SQLite(sqliteDbPath: $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}{configuration.GetConnectionString("sqliteDbPath")}").WriteTo.Console().CreateLogger();
+                //Log.Logger = new LoggerConfiguration().WriteTo.SQLite(sqliteDbPath: $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}{configuration.GetConnectionString("sqliteDbPath")}").WriteTo.Console().CreateLogger();
+
+                Log.Logger = new LoggerConfiguration()
+                            .Enrich.FromLogContext()
+                            .WriteTo.Console()
+                            .CreateLogger();
             }
 
-            CreateWebHostBuilder(args).UseSerilog().Build().Run();
+
+            try
+            {
+                Log.Information("Starting up");
+                CreateWebHostBuilder(args).UseSerilog().Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application start-up failed");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
            WebHost.CreateDefaultBuilder(args)
+               .UseSerilog() // Our goal is to have all log events processed through the same (Serilog) logging pipeline
                .UseStartup<Startup>();
     }
 }

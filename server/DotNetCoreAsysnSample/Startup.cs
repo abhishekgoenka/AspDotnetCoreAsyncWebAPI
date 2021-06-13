@@ -96,6 +96,8 @@ namespace DotNetCoreAsysnSample
             // Visit http://localhost:5000/swagger
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASP.NET Core Customers API"); });
 
+            // Add this line; you'll need `using Serilog;` up the top, too
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 
