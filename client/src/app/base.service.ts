@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/internal/Observable";
+import { environment } from "src/environments/environment";
 
 export abstract class BaseService {
   constructor(protected http: HttpClient) {}
@@ -15,6 +16,10 @@ export abstract class BaseService {
   abstract get<T>(id: number): Observable<T>;
   abstract put<T>(item: T): Observable<T>;
   abstract post<T>(item: T): Observable<T>;
+
+  get apiURL(): string {
+    return environment.apiUrl
+  }
 }
 
 export interface ApiResult<T> {

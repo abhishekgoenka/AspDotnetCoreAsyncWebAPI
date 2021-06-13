@@ -21,7 +21,7 @@ export class CityService extends BaseService {
     filterColumn: string,
     filterQuery: string
   ): Observable<ApiResult> {
-    var url = "api/Cities";
+    var url = `${this.apiURL}/api/Cities`;
     var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
@@ -36,16 +36,16 @@ export class CityService extends BaseService {
   }
 
   get<City>(id: number): Observable<City> {
-    var url = "api/Cities/" + id;
+    var url = `${this.apiURL}/api/Cities/` + id;
     return this.http.get<City>(url);
   }
 
   put<City>(item: any): Observable<City> {
-    var url = "api/Cities/" + item.id;
+    var url = `${this.apiURL}/api/Cities/` + item.id;
     return this.http.put<City>(url, item);
   }
   post<City>(item: City): Observable<City> {
-    var url = "api/Cities";
+    var url = `${this.apiURL}/api/Cities`;
     return this.http.post<City>(url, item);
   }
 
@@ -72,7 +72,7 @@ export class CityService extends BaseService {
   }
 
   isDupeCity(item: City): Observable<boolean> {
-    var url = "api/Cities/IsDupeCity";
+    var url = `${this.apiURL}/api/Cities/IsDupeCity`;
     return this.http.post<boolean>(url, item);
   }
 }

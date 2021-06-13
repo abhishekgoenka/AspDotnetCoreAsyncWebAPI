@@ -19,7 +19,7 @@ export class CountryService extends BaseService {
     filterColumn: string,
     filterQuery: string
   ): Observable<ApiResult> {
-    var url = "api/Countries";
+    var url = `${this.apiURL}/api/Countries`;
     var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
@@ -34,16 +34,16 @@ export class CountryService extends BaseService {
   }
 
   get<Country>(id: number): Observable<Country> {
-    var url = "api/Countries/" + id;
+    var url = `${this.apiURL}/api/Countries/` + id;
     return this.http.get<Country>(url);
   }
 
   put<Country>(item: any): Observable<Country> {
-    var url = "api/Countries/" + item.id;
+    var url = `${this.apiURL}/api/Countries/` + item.id;
     return this.http.put<Country>(url, item);
   }
   post<Country>(item: Country): Observable<Country> {
-    var url = "api/Countries";
+    var url = `${this.apiURL}/api/Countries`;
     return this.http.post<Country>(url, item);
   }
   isDupeField(
@@ -55,7 +55,7 @@ export class CountryService extends BaseService {
       .set("countryId", countryId)
       .set("fieldName", fieldName)
       .set("fieldValue", fieldValue);
-    var url = "api/Countries/IsDupeField";
+    var url = `${this.apiURL}/api/Countries/IsDupeField`;
     return this.http.post<boolean>(url, null, { params });
   }
 }
