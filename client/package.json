@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --o",
-    "build": "ng build --prod"
+    "build": "ng build --prod",
+    "docker:build": "sudo docker build -t dotnetcoreasysnsample-angular-client . -f ./angular.release.dockerfile",
+    "docker:run": "sudo docker run -p 80:80 dotnetcoreasysnsample-angular-client"
   },
   "private": true,
   "dependencies": {

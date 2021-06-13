@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+  dotnetcoreasysnsample-angular-client:    
+    build:
+      context: ./client
+      dockerfile: angular.release.dockerfile
+    ports:
+      - "80:80"
+    depends_on: 
+      - dotnetcoreasysnsample-api
+
   dotnetcoreasysnsample-api:    
     build:
       context: ./server/DotNetCoreAsysnSample
