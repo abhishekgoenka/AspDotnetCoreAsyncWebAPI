@@ -31,8 +31,8 @@ namespace DotNetCoreAsysnSample.Controllers
         public async Task<ActionResult> Import()
         {
             // prevents non-development environments from running this method
-            if (!_env.IsDevelopment())
-                throw new SecurityException("Not allowed");
+            // if (!_env.IsDevelopment())
+            //     throw new SecurityException("Not allowed");
 
             var path = Path.Combine(
             _env.ContentRootPath,

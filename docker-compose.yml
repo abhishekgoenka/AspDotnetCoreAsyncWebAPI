@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  dotnetcoreasysnsample-api:    
+    build:
+      context: ./server/DotNetCoreAsysnSample
+      dockerfile: aspnetcore.release.dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on: 
+      - dotnetcoreasysnsample-db
+      - dotnetcoreasysnsample-seq
+  
+  dotnetcoreasysnsample-db:
+    build:
+        context: .
+        dockerfile: sql/sql.Dockerfile
+    restart: always
+    ports:
+        - "1433:1433"   
+    environment:      
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Sqlc0ntainersFTW!
+        - MSSQL_PID=Express 
+  
+  dotnetcoreasysnsample-seq:    
+    image: datalust/seq    
+    ports:
+        - '8005:80'      
+    environment:
+        - ACCEPT_EULA=Y 

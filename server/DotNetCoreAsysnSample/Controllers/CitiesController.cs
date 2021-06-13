@@ -30,8 +30,7 @@ namespace DotNetCoreAsysnSample.Controllers
         //[Route("{pageIndex?}/{pageSize?}")]
         public async Task<ActionResult<ApiResult<CityDTO>>> GetCities(int pageIndex = 0, int pageSize = 10, string sortColumn = null, string sortOrder = null, string filterColumn = null, string filterQuery = null)
         {
-            logger.LogInformation("Getting cities...");
-            return await ApiResult<CityDTO>.CreateAsync(_context.Cities.Select(c => new CityDTO()
+            var ret = await ApiResult<CityDTO>.CreateAsync(_context.Cities.Select(c => new CityDTO()
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -40,6 +39,9 @@ namespace DotNetCoreAsysnSample.Controllers
                 CountryId = c.Country.Id,
                 CountryName = c.Country.Name
             }), pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+
+            logger.LogInformation("Loaded {CityCount} cities", ret.Data.Count);
+            return ret;
         }
 
         // GET: api/Cities/5
