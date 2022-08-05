@@ -14,17 +14,17 @@ Download and install [.NET SDK](https://go.microsoft.com/fwlink/?LinkID=660852&c
 Open DotNetCoreAsysnSample solution in Visual Studio 2019 or higher. Build and run the solution. It would seed the data on first use. Run `server.bat`
 
 # Test APIs
-> https://localhost:5001/api/Seed/Import
+> https://localhost:8080/api/Seed/Import
 
-> https://localhost:5001/api/v1/customers
+> https://localhost:8080/api/v1/customers
 
-> https://localhost:5001/api/v1/customers/5
+> https://localhost:8080/api/v1/customers/5
 
-> https://localhost:5001/api/v1/customers/page/2/20
+> https://localhost:8080/api/v1/customers/page/2/20
 
 # Swagger
 Generate beautiful API documentation, including a UI to explore and test operations, directly from your routes, controllers and models.
-> https://localhost:5001/swagger
+> https://localhost:8080/swagger
 
 # Build and Run Docker Images
 > docker-compose up --build
