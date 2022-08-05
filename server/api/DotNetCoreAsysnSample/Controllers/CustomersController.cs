@@ -1,5 +1,6 @@
 ﻿using DotNetCoreAsysnSample.Models;
 using DotNetCoreAsysnSample.Repository;
+using DotNetCoreShared;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,10 +17,11 @@ namespace DotNetCoreAsysnSample.Controllers
         private readonly ICustomersRepositoryAsync _customersRepository;
         private readonly ILogger _logger;
 
-        public CustomersController(ICustomersRepositoryAsync customersRepo, ILoggerFactory loggerFactory)
+        public CustomersController(ICustomersRepositoryAsync customersRepo, ILoggerFactory loggerFactory, SampleClass sampleClass)
         {
             _customersRepository = customersRepo;
             _logger = loggerFactory.CreateLogger(nameof(CustomersController));
+             _logger.LogInformation(sampleClass.GetTestValue());
         }
 
         /// <summary>
