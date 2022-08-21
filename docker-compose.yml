@@ -12,7 +12,7 @@ services:
 
   dotnetcoreasysnsample-api:    
     build:
-      context: ./server/api/DotNetCoreAsysnSample
+      context: ./server/DotNetCoreAsysnSample
       dockerfile: aspnetcore.release.dockerfile
     ports:
       - "8080:80"
