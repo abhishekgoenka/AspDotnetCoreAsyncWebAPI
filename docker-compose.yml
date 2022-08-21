@@ -10,13 +10,6 @@ services:
     depends_on: 
       - dotnetcoreasysnsample-api
 
-  dotnetcoreasysnsample-shared:    
-    build:
-      context: ./server/shared/DotNetCoreShared/DotNetCoreShared
-      dockerfile: aspnetcore.release.dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-
   dotnetcoreasysnsample-api:    
     build:
       context: ./server/api/DotNetCoreAsysnSample
@@ -27,7 +20,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - SEQ_URL=http://dotnetcoreasysnsample-seq:5341
     depends_on: 
-      - dotnetcoreasysnsample-shared
       - dotnetcoreasysnsample-db
       - dotnetcoreasysnsample-seq
   
