@@ -1,6 +1,5 @@
 ﻿using DotNetCoreAsysnSample.Infrastructure.Filters;
 using DotNetCoreAsysnSample.Repository;
-using DotNetCoreShared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -55,7 +54,6 @@ namespace DotNetCoreAsysnSample
 
             services.AddScoped<ICustomersRepositoryAsync, CustomersRepositoryAsync>();
             services.AddTransient<CustomersDbSeeder>();
-            services.AddTransient<SampleClass>();
 
             //todo: Add resilience framework for .NET Core like Polly, if using external service
             // https://www.hanselman.com/blog/AddingResilienceAndTransientFaultHandlingToYourNETCoreHttpClientWithPolly.aspx

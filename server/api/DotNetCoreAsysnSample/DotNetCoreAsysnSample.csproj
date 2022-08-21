@@ -41,9 +41,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="DotNetCoreShared">
-      <HintPath>..\..\assemblies\DotNetCoreShared.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>
